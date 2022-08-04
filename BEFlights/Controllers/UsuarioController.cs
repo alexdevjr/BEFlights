@@ -22,13 +22,14 @@ namespace BEFlights.Controllers
             _usuarioService = usuarioService;
         }
 
+        // Registrar usuarios
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Usuario usuario)
         {
             try
             {
                 var validateExistence = await _usuarioService.ValidateExistence(usuario);
-                if (validateExistence)
+                if (validateExistence) // Valida si ya esta registrao el mismo usuario
                 {
                     return BadRequest(new { message = "El usuario " + usuario.NombreUsuario + " ya existe!" });
                 }
@@ -44,6 +45,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Actualiza constraseña
         // localhost:xxx/api/Usuario/CambiarPassword
         [Route("CambiarPassword")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

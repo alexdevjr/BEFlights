@@ -21,6 +21,7 @@ namespace BEFlights.Controllers
             _config = config;
         }
 
+        // Acceso a usuarios ya registrados
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Usuario usuario)
         {

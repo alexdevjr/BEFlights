@@ -16,13 +16,14 @@ namespace BEFlights.Controllers
             _flightService = flightService;
         }
 
+        // Guardar vuelos
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]Flight flight)
         {
             try
             {
                 var validateExistence = await _flightService.ValidateExistence(flight);
-                if (validateExistence)
+                if (validateExistence) // Valida la existencia del mismo numero de vuelo registrado
                 {
                     return BadRequest(new { message = "El numero de vuelo " + flight.FlightNumber + " ya existe!" });
                 }
@@ -36,6 +37,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Obtener todos los vuelos
         [Route("getAllFlights")]
         [HttpGet]
         public async Task<IActionResult> GetAllFlights()
@@ -51,6 +53,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Obtener todos los vuelos con el mismo origen
         [Route("origin/{origin}")]
         [HttpGet]
         public async Task<IActionResult> GetAllOrigins(string origin)
@@ -66,6 +69,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Obtener todos los vuelos con el mismo destino
         [Route("destination/{destination}")]
         [HttpGet]
         public async Task<IActionResult> GetAllDestinations(string destination)
@@ -81,6 +85,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Obtener todos los vuelos con el mismo destino y origen
         [Route("query/{origin}/{destination}")]
         [HttpGet]
         public async Task<IActionResult> GetFlights(string origin, string destination)
@@ -96,6 +101,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Actualizar vuelos
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateFlight(int id, [FromBody] Flight flight)
         {
@@ -116,6 +122,7 @@ namespace BEFlights.Controllers
             }
         }
 
+        // Eliminar vuelos
         [HttpDelete("{idFlight}")]
         public async Task<IActionResult> Delete(int idFlight)
         {
